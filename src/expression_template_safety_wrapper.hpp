@@ -25,7 +25,7 @@ public:
 
       if constexpr (is_lhs_an_expression) {
          constexpr bool does_lhs_reference_rvalue =
-            std::decay_t<Derived>::IsReferencingAnRValue;
+            std::decay_t<Derived>::IsReferencingAnRValueMatrix;
 
          static_assert(
             !does_lhs_reference_rvalue,
@@ -36,19 +36,24 @@ public:
          is_instantiation_of<MatrixExpression, std::decay_t<Other>>::value;
       constexpr bool is_rhs_an_rvalue = std::is_rvalue_reference<Other&&>::value;
 
-      if constexpr (is_rhs_an_rvalue) {
-         return MatrixExpression<std::true_type, UnderlyingType>(
-            static_cast<Derived const*>(this)->underlying() +
-            std::forward<Other>(other).underlying());
-      }
-      else if constexpr (is_rhs_an_expression) {
+      if constexpr (is_rhs_an_expression) {
          constexpr bool is_rhs_an_lvalue = std::is_lvalue_reference<Other&&>::value;
 
          if constexpr (is_rhs_an_lvalue) {
             static_assert(
-               !std::decay_t<Other>::IsReferencingAnRValue,
+               !std::decay_t<Other>::IsReferencingAnRValueMatrix,
                "The RHS references an r-value past its lifetime.");
          }
+         else {
+            return MatrixExpression<std::false_type, UnderlyingType>(
+                static_cast<Derived const*>(this)->underlying() +
+                std::forward<Other>(other).underlying());
+         }
+      }
+      else if constexpr (is_rhs_an_rvalue) {
+         return MatrixExpression<std::true_type, UnderlyingType>(
+            static_cast<Derived const*>(this)->underlying() +
+            std::forward<Other>(other).underlying());
       }
       else {
          return MatrixExpression<std::false_type, UnderlyingType>(
@@ -72,11 +77,11 @@ public:
 
          if constexpr (is_rhs_an_lvalue) {
             static_assert(
-               !std::decay_t<Other>::IsReferencingAnRValue,
-               "The RHS references a r-value past its lifetime.");
+               !std::decay_t<Other>::IsReferencingAnRValueMatrix,
+               "The RHS references an r-value past its lifetime.");
          }
 
-         if constexpr (std::decay_t<Other>::IsReferencingAnRValue) {
+         if constexpr (std::decay_t<Other>::IsReferencingAnRValueMatrix) {
             return MatrixExpression<std::true_type, UnderlyingType>{
                std::move(*static_cast<Derived const*>(this)).underlying() +
                std::forward<Other>(other).underlying()};
@@ -88,7 +93,7 @@ public:
 
       if constexpr (is_lhs_an_expression) {
          constexpr bool lhs_references_rvalue =
-            std::decay_t<Derived>::IsReferencingAnRValue;
+            std::decay_t<Derived>::IsReferencingAnRValueMatrix;
 
          if constexpr (lhs_references_rvalue) {
             return MatrixExpression<std::true_type, UnderlyingType>{
@@ -127,7 +132,7 @@ template<typename ReferencesAnRValue, typename UnderlyingType>
 class MatrixExpression :
 public MatrixBase<MatrixExpression<ReferencesAnRValue, UnderlyingType>> {
 public:
-   static constexpr bool IsReferencingAnRValue = ReferencesAnRValue::value;
+   static constexpr bool IsReferencingAnRValueMatrix = ReferencesAnRValue::value;
 
    MatrixExpression(UnderlyingType underlying) : m_underlying(underlying) {}
 
