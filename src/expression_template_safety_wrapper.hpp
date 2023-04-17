@@ -44,6 +44,11 @@ class MatrixBase {
                     !std::decay_t<Other>::IsReferencingAnRValue,
                     "The RHS references an r-value past its lifetime.");
             }
+            else {
+                return MatrixExpression<std::true_type, UnderlyingType>(
+                    static_cast<Derived const*>(this)->underlying() +
+                    std::forward<Other>(other).underlying());
+            }
         } else if constexpr (is_rhs_an_rvalue) {
             return MatrixExpression<std::true_type, UnderlyingType>(
                 static_cast<Derived const*>(this)->underlying() +
