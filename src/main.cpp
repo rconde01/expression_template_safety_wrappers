@@ -259,5 +259,83 @@ auto main() -> int {
    (m1 + mat_func()) + (m1 + (m2 + m3));
 #endif
 
+#ifdef TEST_7_1
+   auto lvme2 = m1 + (m2 + m3);
+   lvme2 + m2;
+#endif
+
+#ifdef TEST_7_2
+   auto lvme2 = m1 + (m2 + m3);
+   lvme2 + mat_func();
+#endif
+
+#ifdef TEST_7_3
+   auto lvme2 = m1 + (m2 + m3);
+   auto lvme  = m1 + m2;
+   lvme2 + lvme;
+#endif
+
+#ifdef TEST_7_4
+   auto lvme2 = m1 + (m2 + m3);
+   lvme2 + (m2 + m3);
+#endif
+
+#ifdef TEST_7_5
+   auto lvme2 = m1 + (m2 + m3);
+   auto lvme  = m1 + mat_func();
+   lvme2 + lvme;
+#endif
+
+#ifdef TEST_7_6
+   auto lvme2 = m1 + (m2 + m3);
+   lvme2 + (m1 + mat_func());
+#endif
+
+#ifdef TEST_7_7
+   auto lvme2 = m1 + (m2 + m3);
+   auto lvme  = m1 + (m2 + m3);
+   lvme2 + lvme;
+#endif
+
+#ifdef TEST_7_8
+   auto lvme2 = m1 + (m2 + m3);
+   lvme2 + (m1 + (m2 + m3));
+#endif
+
+#ifdef TEST_8_1
+   (m1 + (m2 + m3)) + m2;
+#endif
+
+#ifdef TEST_8_2
+   (m1 + (m2 + m3)) + mat_func();
+#endif
+
+#ifdef TEST_8_3
+   auto lvme = m1 + m2;
+   (m1 + (m2 + m3)) + lvme;
+#endif
+
+#ifdef TEST_8_4
+   (m1 + (m2 + m3)) + (m2 + m3);
+#endif
+
+#ifdef TEST_8_5
+   auto lvme = m1 + mat_func();
+   (m1 + (m2 + m3)) + lvme;
+#endif
+
+#ifdef TEST_8_6
+   (m1 + (m2 + m3)) + (m1 + mat_func());
+#endif
+
+#ifdef TEST_8_7
+   auto lvme = m1 + (m2 + m3);
+   (m1 + (m2 + m3)) + lvme;
+#endif
+
+#ifdef TEST_8_8
+   (m1 + (m2 + m3)) + (m1 + (m2 + m3));
+#endif
+
    return 0;
 }
