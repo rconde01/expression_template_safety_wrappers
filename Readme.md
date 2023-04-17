@@ -1,5 +1,5 @@
 # Expression Template Safety Wrapper
-This project is an experiment in avoiding accidental use of dangling references within expression templates. It is based on ideas from Daniel Withopf presented in his talk [Taking Static Type-safety to the Next Level: Physical Units for Matrices](https://www.youtube.com/watch?v=SLSTS-EvOx4&t=3968s) at CppNow 2022. Here it is applied to `Eigen` via wrapper classes but I'm interested in whether it would be possible/desirable to integrate the technique directly within `Eigen`.
+This project is an experiment in avoiding accidental use of dangling references within expression templates. It is based on ideas from Daniel Withopf presented in his talk [Taking Static Type-safety to the Next Level: Physical Units for Matrices](https://www.youtube.com/watch?v=SLSTS-EvOx4&t=3968s) at CppNow 2022. Here it is applied to `Eigen` via wrapper classes but I'm interested in whether it would be possible/desirable to integrate the technique directly within `Eigen`. The key to making this technique work is `Ref-qualifers` which allow you to distance cases where a class is being used as r-value reference and an l-value reference.
 
 ```
 -- src
