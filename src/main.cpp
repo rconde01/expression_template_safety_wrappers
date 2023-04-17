@@ -37,6 +37,33 @@ auto main() -> int {
    m1 + m2;
 #endif
 
+#ifdef TEST_1_2
+   m1 + mat_func();
+#endif
+
+#ifdef TEST_1_3
+   auto lvme = m1 + m2;
+   m1 + lvme;
+#endif
+
+#ifdef TEST_1_4
+   m1 + (m2 + m3);
+#endif
+
+#ifdef TEST_1_5
+   auto lvme = m1 + mat_func();
+   m1 + lvme;
+#endif
+
+#ifdef TEST_1_6
+   m1 + (m1 + mat_func());
+#endif
+
+#ifdef TEST_1_7
+   auto lvme = m1 + (m2 + m3);
+   m1 + lvme;
+#endif
+
 #ifdef TEST_5_1
    auto lvme = m1 + mat_func();
    lvme + m2;
