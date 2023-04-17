@@ -12,7 +12,7 @@ Building/Testing on Windows with Conan 2/Visual Studio 2022 with Conan 2 in a vi
 
 ```
 REM enable the visual studio compiler
-C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat
+"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
 
 REM enable the virtual environment on which conan 2 is installed
 C:\Users\MyUserName\Envs\conan2test\Scripts\activate.bat
@@ -24,9 +24,7 @@ REM Configure CMake
 cd build
 cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake
 
-REM Build the Source
-cmake --build .
+REM Build the Source and run the tests
+cmake --build . && ctest
 
-REM Run the tests
-ctest
 ```
