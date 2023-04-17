@@ -224,5 +224,40 @@ auto main() -> int {
    lvme2 + (m1 + (m2 + m3));
 #endif
 
+#ifdef TEST_6_1
+   (m1 + mat_func()) + m2;
+#endif
+
+#ifdef TEST_6_2
+   (m1 + mat_func()) + mat_func();
+#endif
+
+#ifdef TEST_6_3
+   auto lvme = m1 + m2;
+   (m1 + mat_func()) + lvme;
+#endif
+
+#ifdef TEST_6_4
+   (m1 + mat_func()) + (m2 + m3);
+#endif
+
+#ifdef TEST_6_5
+   auto lvme = m1 + mat_func();
+   (m1 + mat_func()) + lvme;
+#endif
+
+#ifdef TEST_6_6
+   (m1 + mat_func()) + (m1 + mat_func());
+#endif
+
+#ifdef TEST_6_7
+   auto lvme = m1 + (m2 + m3);
+   (m1 + mat_func()) + lvme;
+#endif
+
+#ifdef TEST_6_8
+   (m1 + mat_func()) + (m1 + (m2 + m3));
+#endif
+
    return 0;
 }
