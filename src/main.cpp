@@ -114,7 +114,7 @@ auto main() -> int {
 #endif
 
 #ifdef TEST_3_3
-   auto lvme = m1 + m2;
+   auto lvme  = m1 + m2;
    auto lvme2 = m1 + m2;
    lvme2 + lvme;
 #endif
@@ -125,7 +125,7 @@ auto main() -> int {
 #endif
 
 #ifdef TEST_3_5
-   auto lvme = m1 + mat_func();
+   auto lvme  = m1 + mat_func();
    auto lvme2 = m1 + m2;
    lvme2 + lvme;
 #endif
@@ -137,7 +137,7 @@ auto main() -> int {
 
 #ifdef TEST_3_7
    auto lvme2 = m1 + m2;
-   auto lvme = m1 + (m2 + m3);
+   auto lvme  = m1 + (m2 + m3);
    lvme2 + lvme;
 #endif
 
@@ -179,6 +179,49 @@ auto main() -> int {
 
 #ifdef TEST_4_8
    (m2 + m3) + (m1 + (m2 + m3));
+#endif
+
+#ifdef TEST_5_1
+   auto lvme2 = m1 + mat_func();
+   lvme2 + m2;
+#endif
+
+#ifdef TEST_5_2
+   auto lvme2 = m1 + mat_func();
+   lvme2 + mat_func();
+#endif
+
+#ifdef TEST_5_3
+   auto lvme2 = m1 + mat_func();
+   auto lvme  = m1 + m2;
+   lvme2 + lvme;
+#endif
+
+#ifdef TEST_5_4
+   auto lvme2 = m1 + mat_func();
+   lvme2 + (m2 + m3);
+#endif
+
+#ifdef TEST_5_5
+   auto lvme2 = m1 + mat_func();
+   auto lvme  = m1 + mat_func();
+   lvme2 + lvme;
+#endif
+
+#ifdef TEST_5_6
+   auto lvme2 = m1 + mat_func();
+   lvme2 + (m1 + mat_func());
+#endif
+
+#ifdef TEST_5_7
+   auto lvme2 = m1 + mat_func();
+   auto lvme  = m1 + (m2 + m3);
+   lvme2 + lvme;
+#endif
+
+#ifdef TEST_5_8
+   auto lvme2 = m1 + mat_func();
+   lvme2 + (m1 + (m2 + m3));
 #endif
 
    return 0;
