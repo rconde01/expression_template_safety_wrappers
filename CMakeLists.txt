@@ -3,24 +3,33 @@ project(expression_template_safety_tests)
 
 enable_testing()
 
+find_package(Eigen3 REQUIRED)
+
 add_library(shared-config INTERFACE)
 add_library(ets::base-config ALIAS shared-config)
 
+target_link_libraries(shared-config INTERFACE Eigen3::Eigen)
+
+function(setup_positive_test target_name)
+    add_executable(${target_name} src/main.cpp)
+    string(TOUPPER ${target_name} pp_name)
+    target_compile_definitions(${target_name} PRIVATE ${pp_name})
+    target_link_libraries(${target_name} ets::base-config)
+    add_test(NAME ${target_name} COMMAND ${CMAKE_COMMAND} --build . --target ${target_name} --config $<CONFIGURATION>)
+endfunction()
+
+function(setup_negative_test target_name assert_message)
+    setup_positive_test(${target_name})
+
+    set_target_properties(${target_name} PROPERTIES
+        EXCLUDE_FROM_ALL TRUE
+        EXCLUDE_FROM_DEFAULT_BUILD TRUE
+    )
+
+    set_tests_properties(${target_name} PROPERTIES PASS_REGULAR_EXPRESSION ${assert_message})
+endfunction()
+
 target_compile_features(shared-config INTERFACE cxx_std_17)
 
-find_package(Eigen3 REQUIRED)
-
-add_executable(test_1_1 src/main.cpp)
-target_compile_definitions(test_1_1 PRIVATE TEST_1_1)
-target_link_libraries(test_1_1 ets::base-config Eigen3::Eigen)
-add_test(NAME Test_1_1 COMMAND ${CMAKE_COMMAND} --build . --target test_1_1 --config $<CONFIGURATION>)
-
-add_executable(test_5_1 src/main.cpp)
-target_compile_definitions(test_5_1 PRIVATE TEST_5_1)
-target_link_libraries(test_5_1 ets::base-config Eigen3::Eigen)
-set_target_properties(test_5_1 PROPERTIES
-    EXCLUDE_FROM_ALL TRUE
-    EXCLUDE_FROM_DEFAULT_BUILD TRUE
-)
-add_test(NAME Test_5_1 COMMAND ${CMAKE_COMMAND} --build . --target test_5_1 --config $<CONFIGURATION>)
-set_tests_properties(Test_5_1 PROPERTIES PASS_REGULAR_EXPRESSION "The LHS references an r-value past its lifetime.")
+setup_positive_test(test_1_1)
+setup_negative_test(test_5_1 "The LHS references an r-value past its lifetime.")
